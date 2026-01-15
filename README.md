@@ -20,16 +20,15 @@ Vamos criar um **Perceptron** - o modelo mais simples de rede neural. Ele funcio
 ## 💻 Requisitos
 
 - Python 3.6 ou superior
-- Biblioteca NumPy (para cálculos matemáticos)
+- Nenhuma biblioteca externa necessária! (Apenas Python puro)
 
 ## 📥 Instalação
 
-```bash
-# Instale as dependências
-pip install -r requirements.txt
+Não é necessário instalar nada além do Python! O projeto usa apenas a biblioteca padrão do Python.
 
-# Ou instale o NumPy diretamente
-pip install numpy
+```bash
+# Apenas certifique-se de ter Python 3.6 ou superior instalado
+python3 --version
 ```
 
 ## 🎮 Como usar

@@ -9,7 +9,6 @@ diferenciar números pares de ímpares.
 É o "Hello World" do Machine Learning!
 """
 
-import numpy as np
 import random
 
 
