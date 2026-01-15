@@ -93,8 +93,9 @@ class PerceptronSimples:
             for entrada, rotulo_correto in zip(entradas, rotulos):
                 # Extrai característica
                 caracteristica = self.extrair_caracteristica(entrada)
-                # Faz uma previsão
-                previsao = self.prever(entrada)
+                # Calcula soma ponderada e faz previsão
+                soma = caracteristica * self.peso + self.bias
+                previsao = self.ativacao(soma)
                 
                 # Calcula o erro
                 erro = rotulo_correto - previsao
