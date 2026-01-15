@@ -81,7 +81,8 @@ class PerceptronSimples:
             rotulos: Lista de classificações corretas (1=par, -1=ímpar)
             epocas: Número de vezes que passamos por todos os exemplos
         """
-        print(f"🎓 Iniciando treinamento com {len(entradas)} exemplos...")
+        total_exemplos = len(entradas)
+        print(f"🎓 Iniciando treinamento com {total_exemplos} exemplos...")
         print(f"   Taxa de aprendizado: {self.taxa_aprendizado}")
         print(f"   Épocas: {epocas}\n")
         
@@ -106,7 +107,7 @@ class PerceptronSimples:
             
             # Mostra progresso a cada 20 épocas
             if (epoca + 1) % 20 == 0:
-                precisao = ((len(entradas) - erros) / len(entradas)) * 100
+                precisao = ((total_exemplos - erros) / total_exemplos) * 100
                 print(f"   Época {epoca + 1}/{epocas} - Precisão: {precisao:.1f}%")
         
         print(f"\n✅ Treinamento concluído!")
@@ -141,6 +142,25 @@ def gerar_dados_treinamento(quantidade=20):
     return entradas, rotulos
 
 
+def verificar_acerto(previsao, numero):
+    """
+    Verifica se a previsão está correta.
+    
+    Args:
+        previsao: Previsão da IA (1 para par, -1 para ímpar)
+        numero: Número que foi classificado
+        
+    Returns:
+        Tupla (acertou, eh_par, previsao_texto, correto_texto)
+    """
+    eh_par = (numero % 2 == 0)
+    previsao_texto = "PAR" if previsao == 1 else "ÍMPAR"
+    correto_texto = "PAR" if eh_par else "ÍMPAR"
+    acertou = (previsao == 1 and eh_par) or (previsao == -1 and not eh_par)
+    
+    return acertou, eh_par, previsao_texto, correto_texto
+
+
 def testar_ia(perceptron, quantidade_testes=10):
     """
     Testa a IA com novos números.
@@ -157,18 +177,11 @@ def testar_ia(perceptron, quantidade_testes=10):
         # Gera um número aleatório
         numero = random.randint(0, 100)
         
-        # Verifica se é realmente par ou ímpar
-        eh_par = (numero % 2 == 0)
-        
         # Pede para a IA prever
         previsao = perceptron.prever(numero)
         
-        # Converte previsão para texto
-        previsao_texto = "PAR" if previsao == 1 else "ÍMPAR"
-        correto_texto = "PAR" if eh_par else "ÍMPAR"
-        
-        # Verifica se acertou
-        acertou = (previsao == 1 and eh_par) or (previsao == -1 and not eh_par)
+        # Verifica se acertou usando a função helper
+        acertou, _, previsao_texto, correto_texto = verificar_acerto(previsao, numero)
         
         if acertou:
             acertos += 1
@@ -202,12 +215,9 @@ def modo_interativo(perceptron):
             
             # IA faz a previsão
             previsao = perceptron.prever(numero)
-            previsao_texto = "PAR" if previsao == 1 else "ÍMPAR"
             
-            # Verifica se está correto
-            eh_par = (numero % 2 == 0)
-            correto_texto = "PAR" if eh_par else "ÍMPAR"
-            acertou = (previsao == 1 and eh_par) or (previsao == -1 and not eh_par)
+            # Verifica se está correto usando a função helper
+            acertou, _, previsao_texto, correto_texto = verificar_acerto(previsao, numero)
             
             if acertou:
                 print(f"   🤖 A IA diz: {previsao_texto} - ✓ Correto!\n")
